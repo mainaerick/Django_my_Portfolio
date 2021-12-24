@@ -1,0 +1,14 @@
+<section class="timeline" id="experience">
+    <h1 class="heading">experience</h1>
+    {% for experience in experiences %}
+
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title">{{experience.duration}}</h1>
+            <p class="card-detail">{{experience.description}}</p>
+        </div>
+
+    </div>
+    {% endfor %}
+
+</section>

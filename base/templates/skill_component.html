@@ -1,0 +1,35 @@
+<section class="skill-section" id="skills">
+    <h1 class="heading">skills & tools</h1>
+    <div class="skills-container">
+        <div class="skills">
+            <h2 style="width: 100%; text-align: center; height: 80px;">Skills</h2>
+            <div class="skills-items">
+                {% for skill in skills %}
+                <div class="skill-card">
+                    <img src="{{skill.image.url}}" class="skill-img" alt="">
+                    <!-- <div class="skill-level"></div> -->
+                    <h1 class="skill-name">{{skill.title}}</h1>
+                    <p class="skill-info"></p>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+        <div class="tools">
+            <h2 style="width: 100%; text-align: center; height: 80px;">Tools</h2>
+            <div class="tools-items">
+                {% for tool in tools %}
+                <div class="skill-card">
+                    <img src="{{tool.logo.url}}" class="skill-img" alt="">
+                    <h1 class="skill-name">{{tool.title}}</h1>
+                    <p class="skill-info"></p>
+                </div>
+
+                {% endfor %}
+            </div>
+
+        </div>
+
+
+    </div>
+</section>

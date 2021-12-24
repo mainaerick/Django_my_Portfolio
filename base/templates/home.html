@@ -1,0 +1,18 @@
+{% extends "main.html" %}
+{% block content %}
+
+{% include "home_component.html" %}
+
+<div id="about" class="my_info">
+    {% include "about_component.html" %}
+    {% include "skill_component.html" %}
+    <!-- {% include "experience_component.html" %} -->
+</div>
+{% include "project_component.html" %}
+
+
+
+{% include "contact_component.html" %}
+
+
+{% endblock content %}

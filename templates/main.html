@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
+    <!-- <link rel="shortcut icon" href="assets/favicon.ico" type="image/x-icon" /> -->
+    <meta name="viewport" content="width=device-width, user-scalable=yes" />
+
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}?{% now 'U' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <title>Erick.Portfolio</title>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body>
+    {% include 'navbar.html' %} {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {%if message.tags %} class="{{message.tags}}" {% endif %}>
+            {{message}}
+        </li>
+        {% if message.tags %}
+        {%if message.tags == "success"%}
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-right',
+                iconColor: 'white',
+                customClass: {
+                    popup: 'colored-toast'
+                },
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true
+            })
+            Toast.fire({
+                icon: 'success',
+                title: '{{ message }}'
+            })
+        </script>
+        {%elif message.tags == "error"%}
+        <script>
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-right',
+                iconColor: 'white',
+                customClass: {
+                    popup: 'colored-toast'
+                },
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true
+            })
+            Toast.fire({
+                icon: 'error',
+                title: '{{message}}'
+            })
+        </script>
+
+        {% endif %}
+
+        {% endif %}
+        {% endfor %}
+    </ul>
+    {% endif %} {% block content %} {% endblock content %}
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+
+
+
+</html>
