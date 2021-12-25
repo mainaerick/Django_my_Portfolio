@@ -95,7 +95,7 @@ a {
   font-weight: 500;
   color: #8dd1d3;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 600px) {
   .navbar {
     padding: 1rem 1.2rem;
   }
