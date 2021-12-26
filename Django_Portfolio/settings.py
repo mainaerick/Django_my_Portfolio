@@ -26,7 +26,7 @@ SECRET_KEY = 'b_lj(cc)n2(_824bak(qm++c565^6g*4)70i_h5y004x&2p_n%'
 DEBUG = True
 
 ALLOWED_HOSTS = ["erickmaina.pythonanywhere.com", "127.0.0.1",
-                 '192.168.0.180', "fierce-hamlet-96336.herokuapp.com"]
+                 '192.168.0.180', "mainaerick.herokuapp.com"]
 
 
 # Application definition
