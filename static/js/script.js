@@ -11,7 +11,21 @@ let activeLink = 0;
 const hamburger = document.querySelector(".hamburger");
 const navMenu = document.querySelector(".nav-menu");
 const navLink = document.querySelectorAll(".nav-item");
+const hirebtn = document.getElementById("hire-me");
 
+hirebtn.addEventListener("click", () => {
+  section_home.classList.remove("active");
+  section_about.classList.remove("active");
+  section_contact.classList.add("active");
+  // section_experience.classList.remove("active");
+  section_project.classList.remove("active");
+  section_skill.classList.remove("active");
+  links.forEach((link, i) => {
+    link.classList.remove("active");
+    activeLink = i;
+  });
+  links[3].classList.add("active");
+});
 hamburger.addEventListener("click", mobileMenu);
 navLink.forEach((n) => n.addEventListener("click", closeMenu));
 
