@@ -244,6 +244,7 @@ a {
 
 .about-img-container {
   position: relative;
+  z-index: 9;
 }
 
 .about-info {
