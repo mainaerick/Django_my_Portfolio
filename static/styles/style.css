@@ -24,6 +24,7 @@ li {
 
 a {
   text-decoration: none;
+  padding: 3px;
 }
 
 .name {
@@ -653,13 +654,13 @@ a {
 }
 
 .project-btn {
-  height: 40px;
   text-transform: capitalize;
-  font-size: 18px;
+  font-size: 14px;
   border: none;
   background: #000;
   color: #fff;
   cursor: pointer;
+  padding: 7px;
 }
 
 .project-btn.live {
