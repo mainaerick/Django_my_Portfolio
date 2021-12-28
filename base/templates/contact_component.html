@@ -9,10 +9,10 @@
         {% csrf_token %}
         <div class="input_section">
             <div>
-                <input type="text" name="name" id="name" autocomplete="off" placeholder="Name">
-                <input type="email" name="email" id="email" autocomplete="off" placeholder="Email">
+                <input required type="text" name="name" id="name" autocomplete="off" placeholder="Name">
+                <input required type="email" name="email" id="email" autocomplete="off" placeholder="Email">
             </div>
-            <div><textarea name="msg" id="msg" placeholder="Message" autocomplete="off"></textarea></div>
+            <div><textarea required name="msg" id="msg" placeholder="Message" autocomplete="off"></textarea></div>
         </div>
         <button type="submit" class="form-submit-btn">Send Message</button>
     </form>
