@@ -19,14 +19,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG', bool,False)
+DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 
 ALLOWED_HOSTS = []
 
-ALLOWED_HOSTS.extend(filter(None, env('ALLOWED_HOSTS', '').split(',')))
+ALLOWED_HOSTS.extend(filter(None, os.environ.get('ALLOWED_HOSTS', '"localhost", "127.0.0.1",').split(',')))
 # Application definition
 
 INSTALLED_APPS = [
@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'Django_Portfolio.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': env('DB_HOST'),
-        'NAME':env('DB_NAME'),
-        'USER':env('DB_USER'),
-        'PASSWORD':env('DB_PASS')
+        'HOST': os.environ.get('DB_HOST'),
+        'NAME':os.environ.get('DB_NAME'),
+        'USER':os.environ.get('DB_USER'),
+        'PASSWORD':os.environ.get('DB_PASS')
 
     }
 }
@@ -125,21 +125,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_URL = '/static/static/'
+MEDIA_URL = '/static/media/'
 
-STATICFILES_DIRS = [
-    BASE_DIR, 'static'
-]
+# STATICFILES_DIRS = [
+#     BASE_DIR, 'static'
+# ]
+MEDIA_ROOT = '/vol/web/media'
+STATIC_ROOT = '/vol/web/static'
 
-MEDIA_ROOT = BASE_DIR + '/static/media'
-
-
-EMAIL_BACKEND = env('EMAIL_BACKEND')
-EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_USE_TLS = env('EMAIL_USE_TLS')
-EMAIL_PORT = env('EMAIL_PORT')
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')

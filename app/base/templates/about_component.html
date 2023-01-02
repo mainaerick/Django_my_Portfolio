@@ -5,8 +5,8 @@
     <div class="about">
         <div class="about-img-container">
             <img src="{{about.resume_pic.url}}" class="about-img" alt="">
-            <a href="{% url 'download_pdf_file'  filename=about.resume.name %}"><button class="download-cv-btn">downlaod
-                    cv</button></a>
+         {% if about.resume.name %}<a href="{% url 'download_pdf_file'  filename=about.resume.name %}"><button class="download-cv-btn">downlaod
+            cv</button></a>{% endif %}   
         </div>
 
         <div class="more-about">

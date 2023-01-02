@@ -14,7 +14,7 @@ class Command(BaseCommand):
         db_up =False
         while db_up is False:
             try:
-                self.check(database=['defalt'])
+                self.check(databases=['default'])
                 db_up =True
             except (Psycopgp2OpError,OperationalError):
                 self.stdout.write('Database Unavailable, waiting 1 second')

@@ -3,17 +3,23 @@ services:
     app:
         build:
             context: .
+        command: >
+            sh -c "python manage.py wait_for_db &&
+                    python manage.py migrate &&
+                    python manage.py runserver 0.0.0.0:8000"
         ports:
             - 8000:8000
         volumes:
-            - ./app:/Django_Portfolio
+            - ./app:/app
+            - ./data/web:/vol/web
         environment:
             - SECRET_KEY=b_lj(cc)n2(_824bak(qm++c565^6g*4)70i_h5y004x&2p_n%
-            - DEBUG = TRUE
+            - DEBUG = 1
             - DB_HOST=db
             - DB_NAME=dev_db
             - DB_USER=devric
             - DB_PASS=devpass
+            - ALLOWED_HOSTS=127.0.0.1
         depends_on:
             - db
     db:
