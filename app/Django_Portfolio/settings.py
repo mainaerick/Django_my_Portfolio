@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'Django_Portfolio.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': 'db',
+        'HOST': os.environ.get('DB_HOST'),
         'NAME':os.environ.get('DB_NAME'),
         'USER':os.environ.get('DB_USER'),
         'PASSWORD':os.environ.get('DB_PASS')
@@ -128,7 +128,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/static/'
 MEDIA_URL = '/static/media/'
-
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    
+]
 
 MEDIA_ROOT = '/vol/web/media'
 STATIC_ROOT = '/vol/web/static'
