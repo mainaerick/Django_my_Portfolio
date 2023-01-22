@@ -3,11 +3,11 @@
     </h1>
 
     <div class="about">
-        <div class="about-img-container">
+        {% comment %} <div class="about-img-container">
             <img src="{{about.resume_pic.url}}" class="about-img" alt="">
          {% if about.resume.name %}<a href="{% url 'download_pdf_file'  filename=about.resume.name %}"><button class="download-cv-btn">downlaod
             cv</button></a>{% endif %}   
-        </div>
+        </div> {% endcomment %}
 
         <div class="more-about">
             <p class="about-info">{{about.bio}}</p>

@@ -1,22 +1,27 @@
 <section class="project-section" id="projects">
-    <h1 class="heading">some of my <div class="name"> projects</div>
-    </h1>
-    <div class="project-container">
-        {% for project in projects %}
-        <div class="project-card">
-            <img src="{{project.image.url}}" class="project-img" alt="">
-            <div class="project-content">
-                <h1 class="project-title">{{project.title}}</h1>
-                <p class="project-info">
-                    {{project.description}}
-                </p>
-                <div class="project-btn-grp">
-                    <a href="{{project.git_repo}}"><button class="project-btn github">github repo</button></a>
-                    <a href="{{project.live_link}}"><button class="project-btn live">see live</button></a>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+  <h1 class="heading">
+    some of my
+    <div class="name">projects</div>
+  </h1>
+  <div class="project-container">
+    {% for project in projects %}
+    <div class="project-card">
+      <img src="{{project.image.url}}" class="project-img" alt="" />
 
+      <div class="project-btn-grp">
+        <a href="{{project.git_repo}}"
+          ><button class="project-btn github">git</button></a
+        >
+        <a href="{{project.live_link}}"
+          ><button class="project-btn live">live</button></a
+        >
+      </div>
+      <div class="project-content">
+        <h1 class="project-title">{{project.title}}</h1>
+
+        <p class="project-info">{{project.description}}</p>
+      </div>
     </div>
+    {% endfor %}
+  </div>
 </section>
