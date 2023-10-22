@@ -1,6 +1,7 @@
 import os
 from django.http.response import HttpResponse
 from django.shortcuts import render
+from Django_Portfolio.settings import DEFAULT_FROM_EMAIL
 from base.forms import MessageForm
 from django.contrib import messages
 import mimetypes
@@ -22,29 +23,23 @@ def home(request):
     tools = Tool.objects.all()
     context = {"about": about, "projects": projects,
                "skills": skills, "experiences": experiences, "tools": tools}
-    form = MessageForm()
     if request.method == 'POST':
-        # if form.is_valid():
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        message = request.POST.get('msg')
-        Message.objects.create(name=name, email=email, message=message)
-        subject = f"{name} sent you a portfolio message."
-        recipient_list = ["niteric@gmail.com", ]
-        # send_mail(subject, message, email, recipient_list)
-        if send_mail(subject, message, email, recipient_list):
-            print("message sent")
+        form = MessageForm()
+        
+        try:
+            name = request.POST.get('name')
+            email = request.POST.get('email')
+            message = request.POST.get('message')
+            Message.objects.create(name=name, email=email, message=message)
+            subject = f"{name} sent you a portfolio message."
+            recipient_list = [DEFAULT_FROM_EMAIL]
+            send_mail(subject, message, email, recipient_list, fail_silently=True)
             messages.success(
-                request, "Message sent successfully.")
-        else:
+        request, "Message sent successfully.")
+        except:
             print("message not sent")
             messages.error(
-                request, "An error occured message could not be sent.")
-
-        # else:
-        #     print("form not valid")
-        #     messages.error(
-        #         request, "An error occured message could not be sent.")
+                request, "An error occured, message could not be sent.")
     return render(request, 'home.html', context)
 
 
@@ -53,7 +48,7 @@ def download_pdf_file(request, filename=''):
         # Define Django project base directory
         BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         # Define the full file path
-        filepath = BASE_DIR + '/static/media/' + filename
+        filepath = BASE_DIR + '/staticfiles/media/' + filename
         # Open the file for reading content
         path = open(filepath, 'rb')
         # Set the mime type

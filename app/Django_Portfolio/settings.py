@@ -7,11 +7,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+from pathlib import Path
 import os
 import environ
 env = environ.Env()
 environ.Env.read_env()
-from pathlib import Path
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,12 +26,10 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get('DEBUG', 0)))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(" ")
 
-ALLOWED_HOSTS.extend(filter(None, os.environ.get('ALLOWED_HOSTS', '"localhost", "127.0.0.1",').split(',')))
 # Application definition
-
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'base.apps.BaseConfig',
 ]
+SITE_ID = 1
+THIRD_PARTY_APPS = [
+    "djcelery_email",
+]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -80,11 +85,12 @@ WSGI_APPLICATION = 'Django_Portfolio.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'HOST': os.environ.get('DB_HOST'),
-        'NAME':os.environ.get('DB_NAME'),
-        'USER':os.environ.get('DB_USER'),
-        'PASSWORD':os.environ.get('DB_PASS')
+        'ENGINE': os.environ.get('POSTGRES_ENGINE'),
+        'HOST': os.environ.get('PG_HOST'),
+        'NAME': os.environ.get('POSTGRES_DB'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        "PORT": os.environ.get("PG_PORT"),
 
     }
 }
@@ -126,19 +132,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/static/'
-MEDIA_URL = '/static/media/'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-    
-]
+STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "static"
 
-MEDIA_ROOT = '/vol/web/media'
-STATIC_ROOT = '/vol/web/static'
+MEDIA_URL = "/mediafiles/"
+MEDIA_ROOT = BASE_DIR / "mediafiles"
 
-EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+STATICFILES_DIR = [BASE_DIR / "static",]
+
+
+EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
 EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = "info@erick-portfolio.com"
+DOMAIN = os.environ.get("DOMAIN")
+SITE_NAME = "Portfolio"
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_BACKEND")
+CELERY_TIMEZONE = "Africa/Nairobi"

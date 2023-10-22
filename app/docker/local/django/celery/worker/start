@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -o errexit
+
+set -o nounset
+
+watchmedo auto-restart -d Django_Portfolio/ -p "*.py" -- celery worker -A Django_Portfolio --loglevel=info 
