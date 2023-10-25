@@ -20,6 +20,8 @@ services:
       - redis
     networks:
       - Django_Portfolio
+    environment:
+      - DEBUG=1
 
   redis:
     image: redis:5-alpine

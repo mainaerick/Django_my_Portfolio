@@ -3,8 +3,7 @@
 .coverage
 .DS_Store
 .env
-staticfiles
-mediafiles
+
 client/node_modules
 # Byte-compiled / optimized / DLL files
 __pycache__/

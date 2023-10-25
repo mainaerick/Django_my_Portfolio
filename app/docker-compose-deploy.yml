@@ -1,0 +1,107 @@
+version: "3.9"
+
+services:
+  gcloud:
+    image: google/cloud-sdk:latest
+    volumes:
+      - gcp-creds:/creds
+      - .:/app
+    working_dir: /app
+    environment:
+      - CLOUDSDK_CONFIG=/creds
+  api:
+    build:
+      context: .
+      dockerfile: ./docker/local/django/Dockerfile
+    command: /start
+    volumes:
+      - .:/app
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles
+      - style_volume:/app/static
+    expose:
+      - "8000"
+    env_file:
+      - .env
+    depends_on:
+      - postgres-db
+      - redis
+    networks:
+      - Django_Portfolio
+
+  redis:
+    image: redis:5-alpine
+    networks:
+      - Django_Portfolio
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: ./docker/local/django/Dockerfile
+    command: /start-celeryworker
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres-db
+    networks:
+      - Django_Portfolio
+
+  flower:
+    build:
+      context: .
+      dockerfile: ./docker/local/django/Dockerfile
+    command: /start-flower
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    ports:
+      - "5557:5555"
+    depends_on:
+      - redis
+      - postgres-db
+    networks:
+      - Django_Portfolio
+
+  postgres-db:
+    image: postgres:12.0-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    networks:
+      - Django_Portfolio
+
+  nginx:
+    restart: always
+    depends_on:
+      - api
+    volumes:
+      - static_volume:/app/staticfiles
+      - media_volume:/app/mediafiles
+      - style_volume:/app/static
+
+    build:
+      context: ./docker/local/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    networks:
+      - Django_Portfolio
+networks:
+  Django_Portfolio:
+    driver: bridge
+
+volumes:
+  gcp-creds:
+  postgres_data:
+  static_volume:
+  media_volume:
+  style_volume:
