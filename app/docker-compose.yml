@@ -86,7 +86,7 @@ services:
       context: ./docker/local/nginx
       dockerfile: Dockerfile
     ports:
-      - "8000:80"
+      - "80:80"
     networks:
       - Django_Portfolio
 networks:
