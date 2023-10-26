@@ -3,8 +3,8 @@ FROM python:3.10.0-slim-buster
 ENV APP_HOME=/app
 RUN mkdir $APP_HOME
 RUN mkdir $APP_HOME/staticfiles
+RUN mkdir $APP_HOME/mediafiles
 COPY ./static /app/static
-COPY ./mediafiles /app/mediafiles
 
 WORKDIR $APP_HOME
 
